@@ -2,7 +2,7 @@ package sky.pro.course3.homeworks.service;
 
 import org.springframework.stereotype.Service;
 import sky.pro.course3.homeworks.model.Faculty;
-import sky.pro.course3.homeworks.model.Student;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,7 +16,8 @@ public class FacultyService {
 
     public Faculty createFaculty(Faculty faculty) {
         faculty.setId(++id);
-        return faculties.put(faculty.getId(), faculty);
+        faculties.put(faculty.getId(), faculty);
+        return faculties.get(faculty.getId());
     }
 
     public Faculty getFaculty(Long id) {
@@ -28,7 +29,8 @@ public class FacultyService {
 
     public Faculty updateFaculty(Long id, Faculty faculty) {
         if (faculties.containsKey(id)) {
-            return faculties.put(id, faculty);
+            faculties.put(id, faculty);
+            return getFaculty(id);
         }
         return null;
     }
@@ -44,5 +46,9 @@ public class FacultyService {
         return faculties.values().stream()
                 .filter(faculty -> faculty.getColor().equals(color))
                 .collect(Collectors.toList());
+    }
+
+    public Collection<Faculty> getAllFaculty() {
+        return faculties.values();
     }
 }
