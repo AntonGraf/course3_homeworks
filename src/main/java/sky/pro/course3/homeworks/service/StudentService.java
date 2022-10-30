@@ -18,25 +18,43 @@ public class StudentService {
 
     public Student createStudent(Student student) {
         student.setId(++id);
-        return students.put(student.getId(), student);
+        students.put(student.getId(), student);
+        return students.get(student.getId());
     }
 
     public Student getStudent(Long id) {
-        return students.get(id);
+
+        if (students.containsKey(id)) {
+            return students.get(id);
+        }
+        return null;
     }
 
     public Student updateStudent(Long id, Student student) {
-        return students.put(id, student);
+
+        if (students.containsKey(id)) {
+            students.put(id, student);
+            return students.get(id);
+        }
+        return null;
+
     }
 
     public Student deleteStudent(Long id) {
-        return students.remove(id);
+        if (students.containsKey(id)) {
+            return students.remove(id);
+        }
+        return null;
     }
 
     public Collection<Student> getStudentByAge(int age) {
         return students.values().stream()
                 .filter(student -> student.getAge() == age)
                 .collect(Collectors.toList());
+    }
+
+    public Collection<Student> getAllStudent() {
+        return students.values();
     }
 
 
