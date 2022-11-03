@@ -35,13 +35,16 @@ public class StudentService {
 
     }
 
-    public Collection<Student> getStudentByAge(int age) {
-        return studentRepository.findStudentsByAge(age);
-    }
-
     public Collection<Student> getAllStudent() {
         return studentRepository.findAll();
     }
 
+    public Collection<Student> getStudentByAge(int age) {
+        return studentRepository.findStudentsByAge(age);
+    }
+
+    public Collection<Student> getStudentByAgeBetween(int startAge, int endAge) {
+        return studentRepository.findStudentsByAgeBetween(startAge, endAge);
+    }
 
 }
