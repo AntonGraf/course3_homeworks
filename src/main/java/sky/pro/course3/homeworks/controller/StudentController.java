@@ -2,12 +2,10 @@ package sky.pro.course3.homeworks.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sky.pro.course3.homeworks.model.Faculty;
 import sky.pro.course3.homeworks.model.Student;
 import sky.pro.course3.homeworks.service.StudentService;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("students")
@@ -21,13 +19,12 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        Student createdStudent = studentService.createStudent(student);
-        return ResponseEntity.ok(createdStudent);
+        return ResponseEntity.ok(studentService.createStudent(student));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        Student student = studentService.getStudent(id);
+        Student student = studentService.findStudent(id);
 
         if (student == null) {
             return ResponseEntity.notFound().build();
@@ -38,19 +35,21 @@ public class StudentController {
 
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
-        Student updatedStudent = studentService.updateStudent(student.getId(), student);
-        return ResponseEntity.ok(updatedStudent);
+        return ResponseEntity.ok(studentService.editStudent(student));
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
-        Student deletedStudent = studentService.deleteStudent(id);
-        return ResponseEntity.ok(deletedStudent);
+        studentService.deleteStudent(id);
+        return ResponseEntity.ok().build();
     }
 
+    @GetMapping
+    public ResponseEntity<Collection<Student>> getAllStudents() {
+        return ResponseEntity.ok(studentService.getAllStudent());
+    }
     @GetMapping("/age/{age}")
     public ResponseEntity<Collection<Student>> getStudentByAge(@PathVariable Integer age) {
-        Collection<Student> studentList = studentService.getStudentByAge(age);
-        return ResponseEntity.ok(studentList);
+        return ResponseEntity.ok(studentService.getStudentByAge(age));
     }
 }

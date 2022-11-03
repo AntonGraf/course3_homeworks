@@ -2,59 +2,41 @@ package sky.pro.course3.homeworks.service;
 
 import org.springframework.stereotype.Service;
 import sky.pro.course3.homeworks.model.Student;
+import sky.pro.course3.homeworks.repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
 
-    private final Map<Long, Student> students = new HashMap<>();
+    private final StudentRepository studentRepository;
 
-    private long id = 0;
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public Student createStudent(Student student) {
-        student.setId(++id);
-        students.put(student.getId(), student);
-        return students.get(student.getId());
+        return studentRepository.save(student);
     }
 
-    public Student getStudent(Long id) {
-
-        if (students.containsKey(id)) {
-            return students.get(id);
-        }
-        return null;
+    public Student findStudent(long id) {
+        return studentRepository.findById(id).get();
     }
 
-    public Student updateStudent(Long id, Student student) {
-
-        if (students.containsKey(id)) {
-            students.put(id, student);
-            return students.get(id);
-        }
-        return null;
-
+    public Student editStudent(Student student) {
+        return studentRepository.save(student);
     }
 
-    public Student deleteStudent(Long id) {
-        if (students.containsKey(id)) {
-            return students.remove(id);
-        }
-        return null;
+    public void deleteStudent(long id) {
+        studentRepository.deleteById(id);
     }
 
     public Collection<Student> getStudentByAge(int age) {
-        return students.values().stream()
-                .filter(student -> student.getAge() == age)
-                .collect(Collectors.toList());
+        return studentRepository.findStudentsByAge(age);
     }
 
     public Collection<Student> getAllStudent() {
-        return students.values();
+        return studentRepository.findAll();
     }
 
 
