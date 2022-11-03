@@ -2,53 +2,40 @@ package sky.pro.course3.homeworks.service;
 
 import org.springframework.stereotype.Service;
 import sky.pro.course3.homeworks.model.Faculty;
+import sky.pro.course3.homeworks.repository.FacultyRepository;
 
-
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 @Service
 public class FacultyService {
 
-    private final Map<Long, Faculty> faculties = new HashMap<>();
+    private final FacultyRepository facultyRepository;
 
-    private long id = 0;
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     public Faculty createFaculty(Faculty faculty) {
-        faculty.setId(++id);
-        faculties.put(faculty.getId(), faculty);
-        return faculties.get(faculty.getId());
+        return facultyRepository.save(faculty);
     }
 
-    public Faculty getFaculty(Long id) {
-        if (faculties.containsKey(id)) {
-            return faculties.get(id);
-        }
-        return null;
+    public Faculty findFaculty(long id) {
+        return facultyRepository.findById(id).get();
     }
 
-    public Faculty updateFaculty(Long id, Faculty faculty) {
-        if (faculties.containsKey(id)) {
-            faculties.put(id, faculty);
-            return getFaculty(id);
-        }
-        return null;
+    public Faculty editFaculty(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
 
-    public Faculty deleteFaculty(Long id) {
-        if (faculties.containsKey(id)) {
-            return faculties.remove(id);
-        }
-        return null;
+    public void deleteFaculty(long id) {
+        facultyRepository.deleteById(id);
     }
 
     public Collection<Faculty> getFacultyByColor(String color) {
-        return faculties.values().stream()
-                .filter(faculty -> faculty.getColor().equals(color))
-                .collect(Collectors.toList());
+        return facultyRepository.findFacultyByColor(color);
     }
 
     public Collection<Faculty> getAllFaculty() {
-        return faculties.values();
+        return facultyRepository.findAll();
     }
 }
