@@ -12,7 +12,6 @@ import sky.pro.course3.homeworks.model.Faculty;
 import sky.pro.course3.homeworks.repository.FacultyRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -56,7 +55,7 @@ class FacultyServiceTest {
 
         when(facultyRepository.findAll()).thenReturn(List.of());
         assertTrue(out.getAllFaculty().isEmpty());
-        assertThrows(NoSuchElementException.class, () -> out.findFaculty(3));
+        assertNull(out.findFaculty(3));
 
         when(facultyRepository.findAll()).thenReturn(getFaculties());
         assertEquals(out.getAllFaculty().size(),4);
@@ -68,7 +67,7 @@ class FacultyServiceTest {
         exceptedFaculty.setId(1);
         assertNotEquals(out.findFaculty(2), exceptedFaculty);
 
-        assertThrows(NoSuchElementException.class, () -> out.findFaculty(5));
+        assertNull(out.findFaculty(5));
 
     }
 

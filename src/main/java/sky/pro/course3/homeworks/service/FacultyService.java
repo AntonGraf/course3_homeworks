@@ -20,7 +20,7 @@ public class FacultyService {
     }
 
     public Faculty findFaculty(long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElse(null);
     }
 
     public Faculty editFaculty(Faculty faculty) {
@@ -28,7 +28,9 @@ public class FacultyService {
     }
 
     public void deleteFaculty(long id) {
-        facultyRepository.deleteById(id);
+        if (facultyRepository.existsById(id)) {
+            facultyRepository.deleteById(id);
+        }
     }
 
     public Collection<Faculty> getFacultyByColor(String color) {

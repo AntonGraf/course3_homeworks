@@ -1,5 +1,6 @@
 package sky.pro.course3.homeworks.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sky.pro.course3.homeworks.model.Student;
@@ -27,7 +28,7 @@ public class StudentController {
         Student student = studentService.findStudent(id);
 
         if (student == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         return ResponseEntity.ok(student);

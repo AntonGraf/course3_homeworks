@@ -12,7 +12,6 @@ import sky.pro.course3.homeworks.model.Student;
 import sky.pro.course3.homeworks.repository.StudentRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -58,7 +57,7 @@ class StudentServiceTest {
 
         when(studentRepository.findAll()).thenReturn(List.of());
         assertTrue(out.getAllStudent().isEmpty());
-        assertThrows(NoSuchElementException.class, () -> out.findStudent(3));
+        assertNull(out.findStudent(3));
 
         List<Student> studentList = getStudents();
         when(studentRepository.findAll()).thenReturn(studentList);
@@ -71,7 +70,7 @@ class StudentServiceTest {
         exceptedStudent.setId(1L);
         assertNotEquals(out.findStudent(2L), exceptedStudent);
 
-        assertThrows(NoSuchElementException.class, () -> out.findStudent(5));
+        assertNull(out.findStudent(5));
 
     }
 
