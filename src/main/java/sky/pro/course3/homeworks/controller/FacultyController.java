@@ -59,4 +59,10 @@ public class FacultyController {
     public ResponseEntity<Collection<Faculty>> getFacultyByColor(@PathVariable String color) {
         return ResponseEntity.ok(facultyService.getFacultyByColor(color));
     }
+
+    @GetMapping("/nameOrColor")
+    public ResponseEntity<Collection<Faculty>> getFacultyByNameOrColor(@RequestParam String name,
+                                                                       @RequestParam String color) {
+        return ResponseEntity.ok(facultyService.getFacultyByNameOrColor(name, color));
+    }
 }

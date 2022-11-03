@@ -33,11 +33,15 @@ public class FacultyService {
         }
     }
 
+    public Collection<Faculty> getAllFaculty() {
+        return facultyRepository.findAll();
+    }
+
     public Collection<Faculty> getFacultyByColor(String color) {
         return facultyRepository.findFacultyByColor(color);
     }
 
-    public Collection<Faculty> getAllFaculty() {
-        return facultyRepository.findAll();
+    public Collection<Faculty> getFacultyByNameOrColor(String name, String color) {
+        return facultyRepository.findFacultyByNameIgnoreCaseOrColorIgnoreCase(name, color);
     }
 }
