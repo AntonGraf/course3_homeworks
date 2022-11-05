@@ -59,4 +59,9 @@ public class StudentController {
                                                                       @RequestParam Integer endAge) {
         return ResponseEntity.ok(studentService.getStudentByAgeBetween(startAge, endAge));
     }
+
+    @GetMapping("{id}/faculty")
+    public ResponseEntity<String> getFacultyByStudent(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.getFacultyNameByStudentId(id));
+    }
 }

@@ -47,4 +47,14 @@ public class StudentService {
         return studentRepository.findStudentsByAgeBetween(startAge, endAge);
     }
 
+    public String getFacultyNameByStudentId(long id) {
+
+        Student student = findStudent(id);
+
+        if (student == null) {
+            return "";
+        }
+        return student.getFaculty().getName();
+    }
+
 }
