@@ -1,9 +1,9 @@
 package sky.pro.course3.homeworks.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 public class Faculty {
@@ -13,6 +13,10 @@ public class Faculty {
     private long id;
     private String name;
     private String color;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "faculty")
+    @JsonIgnore
+    private Collection<Student> students;
 
     public Faculty(String name, String color) {
         this.name = name;
@@ -44,6 +48,14 @@ public class Faculty {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public Collection<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
     }
 
     @Override
