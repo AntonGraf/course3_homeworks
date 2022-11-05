@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sky.pro.course3.homeworks.model.Faculty;
+import sky.pro.course3.homeworks.model.Student;
 import sky.pro.course3.homeworks.service.FacultyService;
 
 import java.util.Collection;
@@ -64,5 +65,10 @@ public class FacultyController {
     public ResponseEntity<Collection<Faculty>> getFacultyByNameOrColor(@RequestParam String name,
                                                                        @RequestParam String color) {
         return ResponseEntity.ok(facultyService.getFacultyByNameOrColor(name, color));
+    }
+
+    @GetMapping("{id}/students")
+    public ResponseEntity<Collection<Student>> getStudentsByFaculties(@PathVariable long id) {
+        return ResponseEntity.ok(facultyService.getStudentsByFacultyId(id));
     }
 }

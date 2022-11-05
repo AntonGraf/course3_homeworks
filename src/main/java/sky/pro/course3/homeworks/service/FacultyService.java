@@ -2,9 +2,11 @@ package sky.pro.course3.homeworks.service;
 
 import org.springframework.stereotype.Service;
 import sky.pro.course3.homeworks.model.Faculty;
+import sky.pro.course3.homeworks.model.Student;
 import sky.pro.course3.homeworks.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class FacultyService {
@@ -43,5 +45,14 @@ public class FacultyService {
 
     public Collection<Faculty> getFacultyByNameOrColor(String name, String color) {
         return facultyRepository.findFacultyByNameIgnoreCaseOrColorIgnoreCase(name, color);
+    }
+
+    public Collection<Student> getStudentsByFacultyId(long id) {
+        Faculty faculty = findFaculty(id);
+
+        if (faculty == null) {
+            return List.of();
+        }
+        return faculty.getStudents();
     }
 }
