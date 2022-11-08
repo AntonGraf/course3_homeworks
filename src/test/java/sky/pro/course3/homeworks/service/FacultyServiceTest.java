@@ -112,7 +112,7 @@ class FacultyServiceTest {
 
         when(facultyRepository.findAll()).thenReturn(List.of());
         assertTrue(out.getAllFaculty().isEmpty());
-        when(facultyRepository.findFacultyByColor("синий")).thenReturn(List.of());
+        when(facultyRepository.findFacultyByColorIgnoreCase("синий")).thenReturn(List.of());
         assertTrue(out.getFacultyByColor("синий").isEmpty());
 
         List<Faculty> facultyList = getFaculties();
@@ -121,10 +121,10 @@ class FacultyServiceTest {
 
         Faculty exceptedFaculty = new Faculty("Пуффендуй", "желтый");
         exceptedFaculty.setId(4);
-        when(facultyRepository.findFacultyByColor("желтый")).thenReturn(List.of(exceptedFaculty));
+        when(facultyRepository.findFacultyByColorIgnoreCase("желтый")).thenReturn(List.of(exceptedFaculty));
         assertTrue(out.getFacultyByColor("желтый").contains(exceptedFaculty));
 
-        when(facultyRepository.findFacultyByColor("зеленый")).thenReturn(facultyList.stream()
+        when(facultyRepository.findFacultyByColorIgnoreCase("зеленый")).thenReturn(facultyList.stream()
                 .filter(faculty -> faculty.getColor().equals("зеленый")).collect(Collectors.toList()));
         assertTrue(out.getAllFaculty().containsAll(out.getFacultyByColor("зеленый")));
     }

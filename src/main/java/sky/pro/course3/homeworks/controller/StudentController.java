@@ -3,6 +3,7 @@ package sky.pro.course3.homeworks.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sky.pro.course3.homeworks.model.Faculty;
 import sky.pro.course3.homeworks.model.Student;
 import sky.pro.course3.homeworks.service.StudentService;
 
@@ -61,7 +62,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}/faculty")
-    public ResponseEntity<String> getFacultyByStudent(@PathVariable Long id) {
+    public ResponseEntity<Faculty> getFacultyByStudent(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.getFacultyNameByStudentId(id));
     }
 }

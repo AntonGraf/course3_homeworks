@@ -1,9 +1,10 @@
 package sky.pro.course3.homeworks.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
 public class Faculty {
@@ -14,8 +15,8 @@ public class Faculty {
     private String name;
     private String color;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "faculty")
-    @JsonIgnore
+    @OneToMany(mappedBy = "faculty")
+    @JsonBackReference
     private Collection<Student> students;
 
     public Faculty(String name, String color) {
@@ -84,6 +85,7 @@ public class Faculty {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
+                ", students=" + students.stream().map(Student::getId).collect(Collectors.toList()) +
                 '}';
     }
 }

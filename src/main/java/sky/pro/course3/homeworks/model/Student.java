@@ -1,7 +1,5 @@
 package sky.pro.course3.homeworks.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,9 +11,8 @@ public class Student {
     private String name;
     private int age;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn (name = "faculty_id")
-    @JsonIgnore
     private Faculty faculty;
 
     public Student(String name, int age) {
@@ -51,6 +48,14 @@ public class Student {
         this.faculty = faculty;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,7 +65,8 @@ public class Student {
 
         if (id != student.id) return false;
         if (age != student.age) return false;
-        return name != null ? name.equals(student.name) : student.name == null;
+        if (name != null ? !name.equals(student.name) : student.name != null) return false;
+        return faculty != null ? faculty.equals(student.faculty) : student.faculty == null;
     }
 
     @Override
@@ -68,6 +74,7 @@ public class Student {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + age;
+        result = 31 * result + (faculty != null ? faculty.hashCode() : 0);
         return result;
     }
 
@@ -77,14 +84,7 @@ public class Student {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", facultyId=" + faculty.getId() +
                 '}';
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId() {
-        return id;
     }
 }

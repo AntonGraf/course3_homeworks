@@ -1,6 +1,7 @@
 package sky.pro.course3.homeworks.service;
 
 import org.springframework.stereotype.Service;
+import sky.pro.course3.homeworks.model.Faculty;
 import sky.pro.course3.homeworks.model.Student;
 import sky.pro.course3.homeworks.repository.StudentRepository;
 
@@ -47,14 +48,14 @@ public class StudentService {
         return studentRepository.findStudentsByAgeBetween(startAge, endAge);
     }
 
-    public String getFacultyNameByStudentId(long id) {
+    public Faculty getFacultyNameByStudentId(long id) {
 
         Student student = findStudent(id);
 
         if (student == null) {
-            return "";
+            return null;
         }
-        return student.getFaculty().getName();
+        return student.getFaculty();
     }
 
 }

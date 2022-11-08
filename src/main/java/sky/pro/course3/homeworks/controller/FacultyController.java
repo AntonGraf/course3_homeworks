@@ -62,9 +62,17 @@ public class FacultyController {
     }
 
     @GetMapping("/nameOrColor")
-    public ResponseEntity<Collection<Faculty>> getFacultyByNameOrColor(@RequestParam String name,
-                                                                       @RequestParam String color) {
-        return ResponseEntity.ok(facultyService.getFacultyByNameOrColor(name, color));
+    public ResponseEntity<Collection<Faculty>> getFacultyByNameOrColor(@RequestParam(required = false) String name,
+                                                                       @RequestParam(required = false) String color) {
+        if (name != null) {
+            return ResponseEntity.ok(facultyService.getFacultyByName(name));
+        }
+
+        if (color != null) {
+            return ResponseEntity.ok(facultyService.getFacultyByColor(color));
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("{id}/students")
