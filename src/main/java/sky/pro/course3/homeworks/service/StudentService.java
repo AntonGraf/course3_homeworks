@@ -58,4 +58,8 @@ public class StudentService {
         return student.getFaculty();
     }
 
+    public Collection<Student> getLastFiveStudents() {
+        return studentRepository.getLastFiveStudents();
+    }
+
 }
