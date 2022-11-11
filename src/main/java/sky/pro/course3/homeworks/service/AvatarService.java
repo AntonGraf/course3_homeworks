@@ -1,6 +1,7 @@
 package sky.pro.course3.homeworks.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import sky.pro.course3.homeworks.model.Avatar;
@@ -11,6 +12,7 @@ import sky.pro.course3.homeworks.repository.StudentRepository;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -62,5 +64,10 @@ public class AvatarService {
         }
 
         return avatar;
+    }
+
+    public Collection<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 }
