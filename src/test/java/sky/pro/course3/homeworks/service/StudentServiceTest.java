@@ -107,9 +107,24 @@ class StudentServiceTest {
         when(studentRepository.findAll()).thenReturn(getStudents().subList(0, getStudents().size() - 1));
         assertEquals(out.getAllStudent().size(), countStudents - 1);
 
-
     }
 
+
+    @Test
+    void deleteStudentByFailedId() {
+
+        when(studentRepository.findAll()).thenReturn(List.of());
+        assertTrue(out.getAllStudent().isEmpty());
+
+        when(studentRepository.findAll()).thenReturn(getStudents());
+        int countStudents = out.getAllStudent().size();
+        when(studentRepository.existsById(13L)).thenReturn(false);
+        out.deleteStudent(13L);
+
+        when(studentRepository.findAll()).thenReturn(getStudents());
+        assertEquals(out.getAllStudent().size(), countStudents);
+
+    }
     @Test
     void getStudentByAge() {
 
