@@ -33,3 +33,4 @@ build/
 .vscode/
 /avatars/
 /test-avatars/
+/log*.txt
