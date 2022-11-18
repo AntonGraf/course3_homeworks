@@ -8,6 +8,7 @@ import sky.pro.course3.homeworks.model.Student;
 import sky.pro.course3.homeworks.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -88,6 +89,17 @@ public class StudentService {
     public Double getStudentsAgeAverage() {
         logger.info("Запущен метод getStudentsAgeAverage");
         return studentRepository.getStudentsCountAndAgeAverage().getStudentsAgeAverage();
+    }
+
+    public Collection<String> getStudentsWithNameStartA() {
+        logger.info("Запущен метод getStudentsWithNameStartA");
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .filter(student -> student.getName().toUpperCase().startsWith("А"))
+                .map(student -> student.getName().toUpperCase())
+                .sorted()
+                .collect(Collectors.toList());
     }
 
 }
