@@ -8,6 +8,7 @@ import sky.pro.course3.homeworks.model.Student;
 import sky.pro.course3.homeworks.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -72,5 +73,13 @@ public class FacultyService {
             return List.of();
         }
         return faculty.getStudents();
+    }
+
+    public String getFacultiesMaxLengthName() {
+        logger.info("Запущен метод getFacultiesMaxLengthName");
+        return facultyRepository.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length)).orElse("");
     }
 }
