@@ -15,7 +15,7 @@ public class FacultyService {
 
     private final FacultyRepository facultyRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
+    private static final Logger logger = LoggerFactory.getLogger(FacultyService.class);
 
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;

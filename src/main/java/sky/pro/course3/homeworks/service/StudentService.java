@@ -14,7 +14,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
