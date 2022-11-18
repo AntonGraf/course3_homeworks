@@ -102,4 +102,12 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
+    public double getStudentsAverageAge() {
+        logger.info("Запущен метод getStudentsAverageAge()");
+        return studentRepository.findAll()
+                .stream()
+                .mapToInt(Student::getAge)
+                .average().orElse(0);
+
+    }
 }
