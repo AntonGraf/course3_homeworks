@@ -25,6 +25,7 @@ public class InfoService {
         int sum = Stream
                 .iterate(1, a -> a + 1)
                 .limit(1_000_000)
+                .unordered()
                 .parallel()
                 .reduce(0, Integer::sum);
 
