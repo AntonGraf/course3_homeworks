@@ -71,8 +71,5 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getLastFiveStudents());
     }
 
-    @GetMapping ("/studentsNameWithAStart")
-    public ResponseEntity<Collection<String>> getStudentsWithNameStartA() {
-        return ResponseEntity.ok(studentService.getStudentsWithNameStartA());
-    }
+
 }
