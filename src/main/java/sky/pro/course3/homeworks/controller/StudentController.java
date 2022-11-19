@@ -86,4 +86,10 @@ public class StudentController {
         studentService.printStudentWithThread();
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/printStudentWithThread2")
+    public ResponseEntity printStudentWithThread2() {
+        studentService.printStudentWithThread2();
+        return ResponseEntity.ok().build();
+    }
 }

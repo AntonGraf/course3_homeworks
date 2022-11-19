@@ -117,23 +117,43 @@ public class StudentService {
         List<Student> students = studentRepository.findAll();
 
         Thread thread1 = new Thread(() ->  {
-            printStudent(students.get(2));
-            printStudent(students.get(3));
+            System.out.println(students.get(2));
+            System.out.println(students.get(3));
         });
 
         Thread thread2 = new Thread(() ->  {
-            printStudent(students.get(4));
-            printStudent(students.get(5));
+            System.out.println(students.get(4));
+            System.out.println(students.get(5));
         });
 
-        printStudent(students.get(0));
-        printStudent(students.get(1));
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
 
         thread1.start();
         thread2.start();
     }
 
-    private void printStudent(Student student) {
-        System.out.println(student);
+    public void printStudentWithThread2() {
+
+        LOGGER.info("Запущен метод printStudentWithThread2()");
+
+        List<Student> students = studentRepository.findAll();
+
+        Thread thread1 = new Thread(() ->  {
+            printStudent(students.subList(2,4));
+        });
+
+        Thread thread2 = new Thread(() ->  {
+            printStudent(students.subList(4,6));
+        });
+
+        printStudent(students.subList(0,2));
+
+        thread1.start();
+        thread2.start();
+    }
+
+    private synchronized void printStudent(List<Student> students) {
+        students.stream().forEach(System.out::println);
     }
 }
