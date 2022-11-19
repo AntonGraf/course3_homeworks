@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern> %cyan(%d{ISO8601}) %highlight(%-5level) [%blue(%-30t)] %yellow(%C{1.}): %msg%n%throwable</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!-- use the previously created timestamp to create a uniquely
+             named log file -->
+        <file>log.txt</file>
+        <encoder>
+            <pattern>%d{ISO8601} %-5level [%-30t] %C{1.}: %msg%n%throwable</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
