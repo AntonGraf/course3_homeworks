@@ -15,61 +15,61 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StudentService.class);
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     public Student createStudent(Student student) {
-        logger.info("Запущен метод createStudent");
+        LOGGER.info("Запущен метод createStudent");
         return studentRepository.save(student);
     }
 
     public Student findStudent(long id) {
-        logger.info("Запущен метод findStudent");
+        LOGGER.info("Запущен метод findStudent");
         return studentRepository.findById(id).orElse(null);
     }
 
     public Student editStudent(Student student) {
-        logger.info("Запущен метод editStudent");
+        LOGGER.info("Запущен метод editStudent");
         return studentRepository.save(student);
     }
 
     public void deleteStudent(long id) {
-        logger.info("Запущен метод deleteStudent");
-        logger.debug("Удаляется студент с id " + id);
+        LOGGER.info("Запущен метод deleteStudent");
+        LOGGER.debug("Удаляется студент с id " + id);
 
         if (studentRepository.existsById(id)){
             studentRepository.deleteById(id);
         }
 
-        logger.error("Не удалось удалить студента. Не найдет студент " + id);
+        LOGGER.error("Не удалось удалить студента. Не найдет студент " + id);
 
     }
 
     public Collection<Student> getAllStudent() {
-        logger.info("Запущен метод getAllStudent");
+        LOGGER.info("Запущен метод getAllStudent");
         return studentRepository.findAll();
     }
 
     public Collection<Student> getStudentByAge(int age) {
-        logger.info("Запущен метод getStudentByAge");
+        LOGGER.info("Запущен метод getStudentByAge");
         return studentRepository.findStudentsByAge(age);
     }
 
     public Collection<Student> getStudentByAgeBetween(int startAge, int endAge) {
-        logger.info("Запущен метод getStudentByAgeBetween");
+        LOGGER.info("Запущен метод getStudentByAgeBetween");
         return studentRepository.findStudentsByAgeBetween(startAge, endAge);
     }
 
     public Faculty getFacultyNameByStudentId(long id) {
-        logger.info("Запущен метод getFacultyNameByStudentId");
+        LOGGER.info("Запущен метод getFacultyNameByStudentId");
 
         Student student = findStudent(id);
 
         if (student == null) {
-            logger.warn("Не найден студент с id " + id);
+            LOGGER.warn("Не найден студент с id " + id);
             return null;
         }
 
@@ -77,25 +77,24 @@ public class StudentService {
     }
 
     public Collection<Student> getLastFiveStudents() {
-        logger.info("Запущен метод getLastFiveStudents");
+        LOGGER.info("Запущен метод getLastFiveStudents");
         return studentRepository.getLastFiveStudents();
     }
 
     public Long getStudentsCount() {
-        logger.info("Запущен метод getStudentsCount");
+        LOGGER.info("Запущен метод getStudentsCount");
         return studentRepository.getStudentsCountAndAgeAverage().getStudentsCount();
     }
 
     public Double getStudentsAgeAverage() {
-        logger.info("Запущен метод getStudentsAgeAverage");
+        LOGGER.info("Запущен метод getStudentsAgeAverage");
         return studentRepository.getStudentsCountAndAgeAverage().getStudentsAgeAverage();
     }
 
     public Collection<String> getStudentNamesWIthAStart() {
-        logger.info("Запущен метод getStudentNamesWIthAStart");
+        LOGGER.info("Запущен метод getStudentNamesWIthAStart");
         return studentRepository.findAll()
                 .stream()
-                .parallel()
                 .map(student -> student.getName().toUpperCase())
                 .filter(name -> name.toUpperCase().startsWith("А"))
                 .sorted()
@@ -103,7 +102,7 @@ public class StudentService {
     }
 
     public double getStudentsAverageAge() {
-        logger.info("Запущен метод getStudentsAverageAge()");
+        LOGGER.info("Запущен метод getStudentsAverageAge()");
         return studentRepository.findAll()
                 .stream()
                 .mapToInt(Student::getAge)

@@ -24,7 +24,7 @@ public class AvatarService {
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(AvatarService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AvatarService.class);
 
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
@@ -36,7 +36,7 @@ public class AvatarService {
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
 
-        logger.info("Запущен метод uploadAvatar");
+        LOGGER.info("Запущен метод uploadAvatar");
         Student student = studentRepository.findById(studentId).get();
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -57,34 +57,34 @@ public class AvatarService {
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
 
-        logger.debug("Добавляется avatar " + avatar);
+        LOGGER.debug("Добавляется avatar " + avatar);
 
         avatarRepository.save(avatar);
     }
     private String getExtensions(String fileName) {
-        logger.info("Запускается метод getExtensions");
+        LOGGER.info("Запускается метод getExtensions");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public Avatar findAvatar(Long studentId) {
-        logger.info("Запускается метод findAvatar");
+        LOGGER.info("Запускается метод findAvatar");
         Avatar avatar = avatarRepository.findAvatarByStudentId(studentId);
 
         if (avatar == null) {
             avatar = new Avatar();
-            logger.warn("Аватар для studentId" + studentId + " не найден. Создается новый");
+            LOGGER.warn("Аватар для studentId" + studentId + " не найден. Создается новый");
         }
 
         return avatar;
     }
 
     public Collection<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
-        logger.info("Запускается метод getAllAvatars");
+        LOGGER.info("Запускается метод getAllAvatars");
 
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
 
-        logger.debug("Запрос страницы номер " + pageNumber);
-        logger.debug("Количество элементов на странице " + pageSize);
+        LOGGER.debug("Запрос страницы номер " + pageNumber);
+        LOGGER.debug("Количество элементов на странице " + pageSize);
 
         return avatarRepository.findAll(pageRequest).getContent();
     }

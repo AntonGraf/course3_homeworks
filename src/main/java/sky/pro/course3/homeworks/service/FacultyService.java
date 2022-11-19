@@ -16,67 +16,67 @@ public class FacultyService {
 
     private final FacultyRepository facultyRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(FacultyService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FacultyService.class);
 
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
 
     public Faculty createFaculty(Faculty faculty) {
-        logger.info("Запущен метод createFaculty");
+        LOGGER.info("Запущен метод createFaculty");
         return facultyRepository.save(faculty);
     }
 
     public Faculty findFaculty(long id) {
-        logger.info("Запущен метод findFaculty");
+        LOGGER.info("Запущен метод findFaculty");
         return facultyRepository.findById(id).orElse(null);
     }
 
     public Faculty editFaculty(Faculty faculty) {
-        logger.info("Запущен метод editFaculty");
+        LOGGER.info("Запущен метод editFaculty");
         return facultyRepository.save(faculty);
     }
 
     public void deleteFaculty(long id) {
-        logger.info("Запущен метод deleteFaculty");
+        LOGGER.info("Запущен метод deleteFaculty");
 
         if (facultyRepository.existsById(id)) {
-            logger.debug("Удаляется факультет " + id);
+            LOGGER.debug("Удаляется факультет " + id);
             facultyRepository.deleteById(id);
         }
 
-        logger.error("Не найден факультет с id " + id);
+        LOGGER.error("Не найден факультет с id " + id);
     }
 
     public Collection<Faculty> getAllFaculty() {
-        logger.info("Запущен метод getAllFaculty");
+        LOGGER.info("Запущен метод getAllFaculty");
         return facultyRepository.findAll();
     }
 
     public Collection<Faculty> getFacultyByColor(String color) {
-        logger.info("Запущен метод findFacultyByColorIgnoreCase");
+        LOGGER.info("Запущен метод findFacultyByColorIgnoreCase");
         return facultyRepository.findFacultyByColorIgnoreCase(color);
     }
 
     public Collection<Faculty> getFacultyByName(String name) {
-        logger.info("Запущен метод getFacultyByName");
+        LOGGER.info("Запущен метод getFacultyByName");
         return facultyRepository.findFacultyByNameIgnoreCase(name);
     }
 
     public Collection<Student> getStudentsByFacultyId(long id) {
-        logger.info("Запущен метод getStudentsByFacultyId");
+        LOGGER.info("Запущен метод getStudentsByFacultyId");
         
         Faculty faculty = findFaculty(id);
 
         if (faculty == null) {
-            logger.warn("Не найдены студенты факультета с id " + id);
+            LOGGER.warn("Не найдены студенты факультета с id " + id);
             return List.of();
         }
         return faculty.getStudents();
     }
 
     public String getFacultiesMaxLengthName() {
-        logger.info("Запущен метод getFacultiesMaxLengthName");
+        LOGGER.info("Запущен метод getFacultiesMaxLengthName");
         return facultyRepository.findAll()
                 .stream()
                 .map(Faculty::getName)

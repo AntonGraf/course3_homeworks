@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 @Service
 public class InfoService {
 
-    private static final Logger logger = LoggerFactory.getLogger(InfoService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InfoService.class);
     @Value("${server.port}")
     private int serverPort;
 
@@ -19,7 +19,7 @@ public class InfoService {
     }
 
     public int getSum() {
-        logger.info("Запускается метод getSum");
+        LOGGER.info("Запускается метод getSum");
         long startTime = System.nanoTime();
 
         int sum = Stream
@@ -29,7 +29,7 @@ public class InfoService {
                 .parallel()
                 .reduce(0, Integer::sum);
 
-        logger.debug("Метод выполнился за " + (System.nanoTime() - startTime) / 1_000_000 + " мс");
+        LOGGER.debug("Метод выполнился за " + (System.nanoTime() - startTime) / 1_000_000 + " мс");
 
         return sum;
     }
