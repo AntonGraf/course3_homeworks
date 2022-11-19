@@ -80,4 +80,10 @@ public class StudentController {
     public ResponseEntity<Double> getStudentsAverageAge() {
         return ResponseEntity.ok(studentService.getStudentsAverageAge());
     }
+
+    @GetMapping("/printStudentWithThread")
+    public ResponseEntity printStudentWithThread() {
+        studentService.printStudentWithThread();
+        return ResponseEntity.ok().build();
+    }
 }

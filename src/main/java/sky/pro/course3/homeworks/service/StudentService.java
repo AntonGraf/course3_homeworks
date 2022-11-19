@@ -8,6 +8,7 @@ import sky.pro.course3.homeworks.model.Student;
 import sky.pro.course3.homeworks.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -108,5 +109,31 @@ public class StudentService {
                 .mapToInt(Student::getAge)
                 .average().orElse(0);
 
+    }
+
+    public void printStudentWithThread() {
+        LOGGER.info("Запущен метод printStudentWithThread()");
+
+        List<Student> students = studentRepository.findAll();
+
+        Thread thread1 = new Thread(() ->  {
+            printStudent(students.get(2));
+            printStudent(students.get(3));
+        });
+
+        Thread thread2 = new Thread(() ->  {
+            printStudent(students.get(4));
+            printStudent(students.get(5));
+        });
+
+        printStudent(students.get(0));
+        printStudent(students.get(1));
+
+        thread1.start();
+        thread2.start();
+    }
+
+    private void printStudent(Student student) {
+        System.out.println(student);
     }
 }
